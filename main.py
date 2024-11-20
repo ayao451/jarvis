@@ -1,18 +1,22 @@
 import os
 from openai import OpenAI 
 from dotenv import load_dotenv
+from pop_up.pop_up_generator import PopUpGenerator
 
 load_dotenv(dotenv_path='./.env')
 API_KEY = os.getenv('OPENAI_API_KEY')
 MODEL = "gpt-4o-mini"
 
 client = OpenAI(api_key=API_KEY)
+prompt = input()
+pop_up_generator = PopUpGenerator()
+
 completion = client.chat.completions.create(
   model=MODEL,
   messages=[
-    {"role": "system", "content": "You are a helpful assistant. Help me with my math homework!"}, # <-- This is the system message that provides context to the model
-    {"role": "user", "content": "Hello! Could you solve 2+2?"}  # <-- This is the user message for which the model will generate a response
+    {"role": "system", "content": "Answer all questions in as few characters as possible."},
+    {"role": "user", "content": prompt}
   ]
 )
 
-print("Assistant: " + completion.choices[0].message.content)
+pop_up_generator.generate_regular_box(prompt, completion.choices[0].message.content)
