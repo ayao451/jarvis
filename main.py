@@ -2,13 +2,17 @@ import os
 from openai import OpenAI 
 from dotenv import load_dotenv
 from pop_up.pop_up_generator import PopUpGenerator
+from input_processing.input_processor import Whisper
+from input_processing.record_audio.new_audio_recording import Recording
 
 load_dotenv(dotenv_path='./.env')
 API_KEY = os.getenv('OPENAI_API_KEY')
 MODEL = "gpt-4o-mini"
 
 client = OpenAI(api_key=API_KEY)
-prompt = input()
+file = "output.wav"
+Recording(file).start()
+prompt = Whisper().transcribe(file)
 pop_up_generator = PopUpGenerator()
 
 completion = client.chat.completions.create(
