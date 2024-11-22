@@ -2,7 +2,7 @@ import os
 from openai import OpenAI 
 from dotenv import load_dotenv
 from pop_up.pop_up_generator import PopUpGenerator
-from input_processing.input_processor import Whisper
+from input_processing.whisper import Whisper
 from input_processing.record_audio.new_audio_recording import Recording
 
 load_dotenv(dotenv_path='./.env')
